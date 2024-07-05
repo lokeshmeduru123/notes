@@ -1,0 +1,332 @@
+linux
+--------------------------- 
+login
+
+ssh -i public-key username@IP 
+
+
+
+vi editor
+-----------------------
+In coloun mode :
+
+:q ---> quit from editor
+:q! --->force quite do not save 
+:wq ----> write and quite
+:wq! --->write and force quit
+:set nu
+:/<word>  --->search the word from top
+:?<word>  ---> search the word from bottom
+:noh  ----> remove foucs i.e no highlight
+:s/file/file-1   ---> to replace file with file-1  only whappens in where the cusor is presernt 
+:%s/bin/BIN  ---> to replace the the first occurance in every line
+:<line-no>s/bin/BIN/gi ----to replace in all 
+:%d ----> to delete all content in file 
+
+
+-----
+Esc mode
+shift+g ---> go to bottom 
+gg ---> go to top
+u --> undo 
+yy -->copy
+p --> paste 
+
+
+
+Permissions
+----------------
+R - 4
+W - 2
+X - 1
+
+
+<User><Group><others>
+
+
+chmod +x <filename>
+chmod o+x <Filename>    to give permissions to execute by others
+
+
+
+Cut & awk command
+-----------------
+https://www.youtube.com/watch?v=tdP5ZrBLFFs
+
+#cut -d "/" -f1     --> to show the first word 
+
+
+awk
+it is used to divide the text in coloum format
+#awk -F "/" '{print $1F}'
+#awk -F "/" '{print $NF}'
+
+
+
+
+Users & Groups Managment
+-----------------------------------------------------
+
+#user add ramesh   --> to create ramesh user in local 
+
+id ramesh ---> to show userid, username
+
+in linux when you create user , by default group will be created with same username 
+
+
+to change password of user 
+#passwd ramesh
+
+
+
+/etc.ssh/sshd_config
+systemctl resatrt sshd
+
+#sshd -t ---> to check the health of config file
+
+group add devops  ---> to create devops group
+
+to add ramesh in devops primary group
+#usermod -g devops ramesh
+
+Linux have one primary group and multiple secondary group
+
+to add ramesh in secondary --testing group
+#usermod -aG testing ramesh    ---> a means appending testing group to ramesh
+
+
+to remove ramesh from testing 
+
+#gpasswd -d ramesh testing
+
+
+to add to wheel group
+
+#usermod -aG wheel rajesh.beeman
+
+If user need to login with private key 
+
+#ssh-keygen -t -rsa 4096 -f ramesh
+
+#ssh-keygen -t rsa -f tools
+
+cd /home/ramesh
+mkdir .ssh
+cd .ssh
+touch authorized_keys
+paste the public key 
+chown -R ramesh:ramesh .ssh
+ 
+ 
+usermod -aG wheel ramesh    --> to add ramesh to sudoers file
+
+
+Process-managment
+--------------------------
+fore-ground
+#sleep 20 
+
+
+back-ground
+#sleep 20 &   -->>> & symbol denotes to run in back ground
+
+
+#ps -ef | grep nginix
+
+#kill PID
+
+#kill -9 PID   ---> force kill 
+
+
+Package-management
+----------------------------------
+Yum install package
+dnf install package		-->rhel-9
+apt install package ---ubuntu 
+
+
+
+Network-Management
+------------------------------------------------------------------------------
+
+#netstat        ---> to list all 
+#netstat -ltnp    ---> to list tcp ports
+
+
+Project- 3-tire archeticture 
+-----------------------------------------------------------------------------------
+
+RDMS--Retational database management system 
+
+mysqld ---3306 ports
+
+
+Node JS -application
+
+
+Strcuture 
+
+.js file 
+package.json   --> its a build file 
+pom.xml     ---> java build file
+requirments.txt ---> python
+
+
+
+
+
+Soft Link vs Hard Link 
+---------------------------------------------
+
+inode = index node
+
+storage , loaction , ownership, permission 
+
+soft link ---- points to original location as a shotcut
+
+suppouse index.html is main fail 
+commands to create a soft link 
+
+#ln -s index.html devops.com
+
+hard link ----saves the same file in diffrent location 
+
+commands to create a hard link  
+
+#ln index.html index.hard.html
+
+
+
+Questions
+
+1. if we delete the main file, can soft link will work ? no 
+2. if we delete the main file , can hard link will word? yes it will work 
+3. does inode if the soft link is same as main file ? NO 
+4. does inode if the hard link is same as main file ? yes same 
+
+when someone deleted the main file, is storage is deleted? No 
+
+because hard link is pointing to this  
+
+
+
+
+shell scripting 
+-----------------------------------------------------
+
+concepts----> 1. variables
+			  2. Data types
+			  3. Functions
+			  4. Loops
+			  5. Conditions
+			  
+			  
+Algorithm 
+
+Fast release 
+reduce the defects
+
+
+
+
+Variables
+----------------
+to define the values for the content 
+also we can pass wthe arguments 
+
+Data Types
+-------------------
+intiger
+float
+decimal
+string
+Boolen  ----> true/false   1=true, 0=false
+array   ----> list of values ----if you define the variable as arry	, it can hold the list of values
+arraylist
+set,map
+
+
+
+
+
+disadvantages of shell scripts
+---------------------------------------------
+
+shell script will not stop even if error occurs
+responsibility to check the previous command is sucess or not 
+
+$?   ----> to check the status of previos command 
+
+1-127 is the failure rane 
+
+if it is 0 then it is sucess
+if it is 1-127 then its an failure of execution of previos command 
+
+
+
+logs
+----------------------------
+> ----> it will redurect the output
+1 ---> sucess
+2 ----> error 
+&  ----> both sucess and error
+>> ---> append 
+
+cat  > file name 
+
+
+colours to identify the failure
+------------------
+\e[31m   --> red colour
+\e[31m   --> gree colour
+\e[33m   ---> yellow 
+\e[34m    ---> blue
+\e[0m     ----> normal white colour , default one 
+
+
+date formate
+-----------------------
+date +%F-%H-%M-%S
+format, hour,minite,second
+
+
+
+
+Shell SCripting --questions
+--------------------------------------
+ how do you call other scripts in shell script
+ 
+ 1way 
+ 
+./<script name >.sh
+variable values will not change after calling other script 
+
+--->chenges happened in other script wil not affect current script 
+--->PID of two scripts are different
+
+2nd way 
+
+source ./<script name >.sh
+
+----> variable values will changes after calling other script
+----> PID is same
+
+
+
+
+
+Cron-tab setting
+--------------------------------
+crontab -l  --> to list the cron jobs
+crontab -e  --> to edit the cron jobs
+Min Hour, Day,  month, week 
+
+
+sendmail
+---------------------------
+echo "This is a test mail & Date $(date)" | mail -s "message" info@joindevops.co
+
+-s ---> subject
+after echo -----> body 
+
+
